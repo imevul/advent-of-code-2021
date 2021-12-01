@@ -21,18 +21,11 @@ function getConvertedInput(bool $useTestData = FALSE): array {
  * @return int The result
  */
 function part1(array $input): int {
-	$result = 0;
-	$prev = 0;
-
-	for ($i = 0; $i < count($input); $i++) {
-		$sum = $input[$i];
-
-		if ($sum > $prev && $prev !== 0) {
-			$result++;
-		}
-
-		$prev = $sum;
-	}
+	[$result] = array_reduce(
+		$input,
+		fn($c, $i) => [$c[0] += (int)($i > $c[1]), $i],
+		[0, INF]
+	);
 
 	return $result;
 }

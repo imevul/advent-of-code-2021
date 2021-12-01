@@ -1,0 +1,22 @@
+{
+	"name": "imevul/advent-of-code-2021",
+	"description": "Collection of solutions for AoC 2021",
+	"minimum-stability": "stable",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "imevul",
+			"email": "imevul@gmail.com"
+		}
+	],
+	"require": {
+	},
+	"autoload": {
+		"psr-4": {
+			"Imevul\\AdventOfCode2021\\": "Imevul\\AdventOfCode2021"
+		},
+		"files": [
+			"Imevul\\AdventOfCode2021\\Common\\helpers.php"
+		]
+	}
+}

@@ -23,7 +23,7 @@ function getConvertedInput(bool $useTestData = FALSE): array {
 function part1(array $input): int {
 	[$result] = array_reduce(
 		$input,
-		fn($c, $i) => [$c[0] += (int)($i > $c[1]), $i],
+		fn($c, $i) => [$c[0] += $i > $c[1], $i],
 		[0, INF]
 	);
 
@@ -36,16 +36,12 @@ function part1(array $input): int {
  */
 function part2(array $input): int {
 	$result = 0;
-	$prev = 0;
+	$prev = INF;
 	$windowSize = 3;
 
 	for ($i = 0; $i < count($input) - ($windowSize - 1); $i++) {
 		$sum = array_sum(array_slice($input, $i, $windowSize));
-
-		if ($sum > $prev && $prev !== 0) {
-			$result++;
-		}
-
+		$result += $sum > $prev;
 		$prev = $sum;
 	}
 

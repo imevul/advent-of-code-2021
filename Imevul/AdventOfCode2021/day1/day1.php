@@ -1,4 +1,8 @@
 <?php
+/*
+ * Sonar Sweep
+ * https://adventofcode.com/2021/day/1
+ */
 
 namespace Imevul\AdventOfCode2021\Day0;
 

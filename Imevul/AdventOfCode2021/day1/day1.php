@@ -35,15 +35,12 @@ function part1(array $input): int {
  * @return int The result
  */
 function part2(array $input): int {
-	$result = 0;
-	$prev = INF;
-	$windowSize = 3;
-
-	for ($i = 0; $i < count($input) - ($windowSize - 1); $i++) {
-		$sum = array_sum(array_slice($input, $i, $windowSize));
-		$result += $sum > $prev;
-		$prev = $sum;
-	}
+	array_walk($input, fn(&$v, $k) => $v = array_sum(array_slice($input, $k, 3)));
+	[$result] = array_reduce(
+		$input,
+		fn($c, $i) => [$c[0] += $i > $c[1], $i],
+		[0, INF]
+	);
 
 	return $result;
 }

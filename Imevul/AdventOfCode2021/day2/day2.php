@@ -25,9 +25,9 @@ function getConvertedInput(bool $useTestData = FALSE): array {
 function moveSubmarine(array $input, array $commands): int {
 	$position = [0, 0, 0];	// Horizontal, Depth, (Aim)
 
-	array_walk($input, function ($action) use (&$position, $commands) {
-		$commands[$action[0]]($position, $action[1]);
-	});
+	foreach ($input as [$command, $action]) {
+		$commands[$command]($position, $action);
+	}
 
 	return $position[0] * $position[1];
 }

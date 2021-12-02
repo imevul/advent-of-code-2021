@@ -17,23 +17,17 @@ function getConvertedInput(bool $useTestData = FALSE): array {
 }
 
 /**
- * @param array $input The list of input
- * @return int The result
+ * Move the submarine according to some predefined actions and commands
+ * @param array<string, int> $input Array of actions
+ * @param array<Callable> $commands Array of command => Callable that specifies how the submarines position is modified for each command
+ * @return int
  */
-function part1(array $input): int {
-	$position = [0, 0];
+function moveSubmarine(array $input, array $commands): int {
+	$position = [0, 0, 0];	// Horizontal, Depth, (Aim)
 
-	$move = function($action) use (&$position) {
-		[$command, $amount] = $action;
-
-		switch ($command) {
-			case 'forward': $position[0] += $amount; break;
-			case 'up':      $position[1] -= $amount; break;
-			case 'down':    $position[1] += $amount; break;
-		}
-	};
-
-	array_walk($input, $move);
+	array_walk($input, function ($action) use (&$position, $commands) {
+		$commands[$action[0]]($position, $action[1]);
+	});
 
 	return $position[0] * $position[1];
 }
@@ -42,22 +36,27 @@ function part1(array $input): int {
  * @param array $input The list of input
  * @return int The result
  */
+function part1(array $input): int {
+	return moveSubmarine($input, [
+		'forward' => fn(&$p, $a) => $p[0] += $a,
+		'up'      => fn(&$p, $a) => $p[1] -= $a,
+		'down'    => fn(&$p, $a) => $p[1] += $a
+	]);
+}
+
+/**
+ * @param array $input The list of input
+ * @return int The result
+ */
 function part2(array $input): int {
-	$position = [0, 0, 0];
-
-	$move = function($action) use (&$position) {
-		[$command, $amount] = $action;
-
-		switch ($command) {
-			case 'forward': $position[0] += $amount; $position[1] += $position[2] * $amount; break;
-			case 'up':      $position[2] -= $amount; break;
-			case 'down':    $position[2] += $amount; break;
-		}
-	};
-
-	array_walk($input, $move);
-
-	return $position[0] * $position[1];
+	return moveSubmarine($input, [
+		'forward' => function (&$p, $a) {
+			$p[0] += $a;
+			$p[1] += $p[2] * $a;
+		},
+		'up'      => fn(&$p, $a) => $p[2] -= $a,
+		'down'    => fn(&$p, $a) => $p[2] += $a
+	]);
 }
 
 $input = getConvertedInput();

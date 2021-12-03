@@ -1,4 +1,8 @@
 <?php
+/*
+ * Binary Diagnostic
+ * https://adventofcode.com/2021/day/3
+ */
 
 namespace Imevul\AdventOfCode2021\Day3;
 

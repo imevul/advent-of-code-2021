@@ -40,8 +40,8 @@ function getMetric(array $input, callable $filter, bool $keepOnlyFiltered = fals
  * @return int The result
  */
 function part1(array $input): int {
-	[$_, $gamma] = getMetric($input, fn($b) => $b[1] >= $b[0]);
-	[$_, $epsilon] = getMetric($input, fn($b) => $b[0] > $b[1]);
+	[, $gamma] = getMetric($input, fn($b) => $b[1] >= $b[0]);
+	[, $epsilon] = getMetric($input, fn($b) => $b[0] > $b[1]);
 
 	return bindec($gamma) * bindec($epsilon);
 }

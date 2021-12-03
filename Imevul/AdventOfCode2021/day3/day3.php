@@ -23,7 +23,7 @@ function getConvertedInput(bool $useTestData = FALSE): array {
  * @param bool $keepOnlyFiltered True to remove any entries that don't match the filter between each bit
  * @return array{string, string}
  */
-function getMetric(array $input, callable $filter, bool $keepOnlyFiltered = false): array {
+function getMetric(array $input, callable $filter, bool $keepOnlyFiltered = FALSE): array {
 	$filterBits = '';
 
 	for ($i = 0, $count = strlen($input[0]); count($input) > 1 && $i < $count; $i++) {

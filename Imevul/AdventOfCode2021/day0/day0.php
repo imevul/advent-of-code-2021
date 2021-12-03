@@ -35,5 +35,10 @@ function part2(array $input): int {
 }
 
 $input = getConvertedInput(TRUE);
+$parts = [part1($input), part2($input)];
+assert($parts[0] === 0, "Part1: Failed to assert that $parts[0] === 0");
+assert($parts[1] === 0, "Part2: Failed to assert that $parts[1] === 0");
+
+$input = getConvertedInput(TRUE);
 output('Solution1: ', part1($input));
 output('Solution2: ', part2($input));

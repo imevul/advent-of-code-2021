@@ -1,4 +1,8 @@
 <?php
+/*
+ * Boilerplate
+ * URL
+ */
 
 namespace Imevul\AdventOfCode2021\Day0;
 

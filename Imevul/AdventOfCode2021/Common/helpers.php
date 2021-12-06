@@ -1,14 +1,19 @@
 <?php
 
+if (!defined('BASE_PATH')) {
+	define('BASE_PATH', realpath(__DIR__ . '/../../..'));
+}
+
 /**
  * Get the puzzle input in a format we can handle.
  * @param bool $useTestData True to use input_test.txt (if it exists)
  * @return array<int>
  */
-function getInput(bool $useTestData = FALSE): array {
+function getInput(?string $dir = NULL, bool $useTestData = FALSE): array {
 	$filename = $useTestData ? 'input_test.txt' : 'input.txt';
+	$dir = !empty($dir) ? "$dir\\"  : '';
 
-	return explode(PHP_EOL, file_get_contents($filename));
+	return explode(PHP_EOL, file_get_contents(realpath($dir . $filename)));
 }
 
 /**
@@ -88,4 +93,43 @@ function assertEquals(mixed $v1, mixed $v2, ?string $name = NULL): bool {
 	}
 
 	return assert($v1 === $v2, sprintf('%s: Failed to assert that %s === %s', $name, $v1, $v2));
+}
+
+function runParts(bool $useTestData = FALSE): array {
+	$key = array_search(__FUNCTION__, array_column(debug_backtrace(), 'function')) + 1;
+	$file = realpath(debug_backtrace()[$key]['file']);
+	$dir = dirname($file);
+	$namespace = str_replace(BASE_PATH, '', $dir);
+	$isMain = realpath(getcwd()) == $dir;
+	$getConvertedInput = $namespace . '\\getConvertedInput';
+	$part1 = $namespace . '\\part1';
+	$part2 = $namespace . '\\part2';
+	$input = $getConvertedInput(getInput($dir, $useTestData));
+	return [[$part1($input), $part2($input)], $isMain];
+}
+
+/**
+ * Assert that using test data for part1 and part2 in the caller namespace matches the expected result
+ * @param array $expected Expected data
+ * @return bool
+ */
+function test(array $expected): bool {
+	[$parts] = runParts(TRUE);
+
+	return assertEquals($parts, $expected, 'Part');
+}
+
+/**
+ * Run part1 and part2 in the caller namespace and return the result
+ * @return array
+ */
+function run(): array {
+	[$parts, $output] = runParts();
+
+	if ($output) {
+		output('Part1', $parts[0]);
+		output('Part2', $parts[1]);
+	}
+
+	return $parts;
 }

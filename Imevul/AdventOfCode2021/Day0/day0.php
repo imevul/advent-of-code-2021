@@ -8,12 +8,8 @@ namespace Imevul\AdventOfCode2021\Day0;
 
 require_once '../../../bootstrap.php';
 
-/**
- * @param bool $useTestData True to use input_test.txt (if it exists)
- * @return array<int>
- */
-function getConvertedInput(bool $useTestData = FALSE): array {
-	return getInput(__DIR__, $useTestData);
+function getConvertedInput(array $input): array {
+	return $input;
 }
 
 /**

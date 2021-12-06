@@ -6,11 +6,12 @@ require_once __DIR__ . '/../../bootstrap.php';
 
 $days = [];
 $directories = glob('Day*');
+$maxDay = (int)$directories[array_key_last($directories)][-1];
 
-foreach (range(1, (int)$directories[array_key_last($directories)][-1]) as $day) {
-	if (file_exists("day$day/day$day.php")) {
-		/** @noinspection PhpIncludeInspection */
-		$days[$day] = include_once("day$day/day$day.php");
+for ($i = 1; $i <= $maxDay; $i++) {
+	$filename = "day$i/day$i.php";
+	if (file_exists($filename)) {
+		$days[$i] = include_once($filename);
 	}
 }
 

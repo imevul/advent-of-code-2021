@@ -6,7 +6,7 @@
 
 namespace Imevul\AdventOfCode2021\Day0;
 
-require_once '../../../bootstrap.php';
+require_once __DIR__ . '../../../bootstrap.php';
 
 function getConvertedInput(array $input): array {
 	return $input;

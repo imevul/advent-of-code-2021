@@ -2,8 +2,12 @@
 
 namespace Imevul\AdventOfCode2021;
 
+require_once __DIR__ . '/../../bootstrap.php';
+
 $days = [];
-foreach (range(1, 6) as $day) {
+$directories = glob('Day*');
+
+foreach (range(1, (int)$directories[array_key_last($directories)][-1]) as $day) {
 	if (file_exists("day$day/day$day.php")) {
 		/** @noinspection PhpIncludeInspection */
 		$days[$day] = include_once("day$day/day$day.php");

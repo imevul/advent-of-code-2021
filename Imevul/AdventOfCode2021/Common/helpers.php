@@ -76,20 +76,25 @@ function dd(...$args): void {
  * @param mixed $v1 First value
  * @param mixed $v2 Second value
  * @param string|null $name Optional name of assertion
+ * @param bool $onlyReturn True to not trigger any errors
  * @return bool
  */
-function assertEquals(mixed $v1, mixed $v2, ?string $name = NULL): bool {
+function assertEquals(mixed $v1, mixed $v2, ?string $name = NULL, bool $onlyReturn = FALSE): bool {
 	if (is_array($v1) && is_array($v2)) {
 		$i = 1;
 		return array_reduce(
 			array_map(
-				function($w1, $w2) use ($name, &$i) {
-					return assertEquals($w1, $w2, $name . ($i++));
+				function($w1, $w2) use ($onlyReturn, $name, &$i) {
+					return assertEquals($w1, $w2, $name . ($i++), $onlyReturn);
 				}, $v1, $v2
 			),
 			fn($c, $v) => $c && $v,
 			TRUE
 		);
+	}
+
+	if ($onlyReturn) {
+		return $v1 === $v2;
 	}
 
 	return assert($v1 === $v2, sprintf('%s: Failed to assert that %s === %s', $name, $v1, $v2));
@@ -111,12 +116,16 @@ function runParts(bool $useTestData = FALSE): array {
 /**
  * Assert that using test data for part1 and part2 in the caller namespace matches the expected result
  * @param array $expected Expected data
- * @return bool
+ * @return bool|bool[]
  */
-function test(array $expected): bool {
-	[$parts] = runParts(TRUE);
+function test(array $expected): array|bool {
+	[$parts, $isMain] = runParts(TRUE);
 
-	return assertEquals($parts, $expected, 'Part');
+	if ($isMain) {
+		return assertEquals($parts, $expected, 'Part');
+	} else {
+		return array_map(fn($v1, $v2) => assertEquals($v1, $v2, NULL, !$isMain), $parts, $expected);
+	}
 }
 
 /**

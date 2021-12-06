@@ -53,5 +53,4 @@ function part2(array $input): int {
 	return bindec($oxygen) * bindec($scrubber);
 }
 
-test([198, 230]);
-return run();
+return [test([198, 230]), run()];

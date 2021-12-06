@@ -11,13 +11,24 @@ $maxDay = (int)$directories[array_key_last($directories)][-1];
 for ($i = 1; $i <= $maxDay; $i++) {
 	$filename = "day$i/day$i.php";
 	if (file_exists($filename)) {
-		$days[$i] = include_once($filename);
+		$days[$i] = [$i, ...include_once($filename)];
 	}
 }
 
-foreach ($days as $day => $result) {
-	echo "Day $day:\n";
-	foreach ($result as $i => $v) {
-		printf("\tPart%s = %d\n", $i + 1, $v);
-	}
+$color = new \Console_Color2();
+$cOK = '%G';
+$cBad = '%R';
+
+$data = [];
+foreach ($days as $day) {
+	$data[] = [
+		$day[1][0] && $day[1][1] ? $color->convert("$cOK{$day[0]}%n") : $color->convert("$cBad{$day[0]}%n"),
+		$day[1][0] ? $color->convert("$cOK{$day[2][0]}%n") : $color->convert("$cBad{$day[2][0]}%n"),
+		$day[1][1] ? $color->convert("$cOK{$day[2][1]}%n") : $color->convert("$cBad{$day[2][1]}%n"),
+	];
 }
+
+$table = new \Console_Table(color: TRUE);
+$table->setHeaders(['Day', 'Part1', 'Part2']);
+$table->addData($data);
+echo $table->getTable();

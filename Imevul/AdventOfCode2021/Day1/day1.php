@@ -45,5 +45,4 @@ function part2(array $input): int {
 	return $result;
 }
 
-test([7, 5]);
-return run();
+return [test([7, 5]), run()];

@@ -69,5 +69,4 @@ function part2(array $input): int {
 	return 0;
 }
 
-test([4512, 1924]);
-return run();
+return [test([4512, 1924]), run()];

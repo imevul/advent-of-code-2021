@@ -55,5 +55,4 @@ function part2(array $input): int {
 	]);
 }
 
-test([150, 900]);
-return run();
+return [test([150, 900]), run()];

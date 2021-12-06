@@ -4,7 +4,7 @@
  * URL
  */
 
-namespace Imevul\AdventOfCode2021\Day0;
+namespace Imevul\AdventOfCode2021\Day7;
 
 require_once __DIR__ . '/../../../bootstrap.php';
 

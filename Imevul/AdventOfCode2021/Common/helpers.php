@@ -130,10 +130,15 @@ function test(array $expected): array|bool {
 
 /**
  * Run part1 and part2 in the caller namespace and return the result
+ * @param bool $skip
  * @return array
  */
-function run(): array {
-	[$parts, $output] = runParts();
+function run(bool $skip = FALSE): array {
+	if ($skip) {
+		[$parts, $output] = [['-', '-'], FALSE];
+	} else {
+		[$parts, $output] = runParts();
+	}
 
 	if ($output) {
 		output('Part1', $parts[0]);

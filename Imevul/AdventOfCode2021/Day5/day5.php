@@ -70,4 +70,4 @@ function part2(array $input): int {
 	return array_reduce($map, fn($c1, $y) => $c1 + array_reduce($y, fn($c2, $x) => $x >= 2 ? $c2 + 1 : $c2, 0), 0);
 }
 
-return [test([5, 12]), run()];
+return [test([5, 12]), run(empty($skipRun))];

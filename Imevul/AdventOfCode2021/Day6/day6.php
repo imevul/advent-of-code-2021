@@ -47,4 +47,4 @@ function part2(array $input): int {
 	return simulateFish($input, 256);
 }
 
-return [test([5934, 26984457539]), run()];
+return [test([5934, 26984457539]), run(empty($skipRun))];

@@ -18,7 +18,7 @@ function getConvertedInput(bool $useTestData = FALSE): array {
 
 /**
  * Simulate a set of fishes over a period of time. Return how many fish there are after that period is up.
- * @param array $input Input fishes
+ * @param array<int> $input Input fishes
  * @param int $numDays Number of days to simulate
  * @return int
  */
@@ -36,7 +36,7 @@ function simulateFish(array $input, int $numDays): int {
 }
 
 /**
- * @param array $input The list of input
+ * @param array<int> $input The list of input
  * @return int The result
  */
 function part1(array $input): int {
@@ -52,9 +52,7 @@ function part2(array $input): int {
 }
 
 $input = getConvertedInput(TRUE);
-$parts = [part1($input), part2($input)];
-assert($parts[0] === 5934, "Part1: Failed to assert that $parts[0] === 5934");
-assert($parts[1] === 26984457539, "Part2: Failed to assert that $parts[1] === 26984457539");
+assertEquals([part1($input), part2($input)], [5934, 26984457539], 'Part');
 
 $input = getConvertedInput();
 output('Solution1: ', part1($input));

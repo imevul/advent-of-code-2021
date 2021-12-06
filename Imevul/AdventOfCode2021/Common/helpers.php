@@ -65,3 +65,27 @@ function dd(...$args): void {
 	var_dump(...$args);
 	die;
 }
+
+/**
+ * Asserts that two values are equal.
+ * @param mixed $v1 First value
+ * @param mixed $v2 Second value
+ * @param string|null $name Optional name of assertion
+ * @return bool
+ */
+function assertEquals(mixed $v1, mixed $v2, ?string $name = NULL): bool {
+	if (is_array($v1) && is_array($v2)) {
+		$i = 1;
+		return array_reduce(
+			array_map(
+				function($w1, $w2) use ($name, &$i) {
+					return assertEquals($w1, $w2, $name . ($i++));
+				}, $v1, $v2
+			),
+			fn($c, $v) => $c && $v,
+			TRUE
+		);
+	}
+
+	return assert($v1 === $v2, sprintf('%s: Failed to assert that %s === %s', $name, $v1, $v2));
+}

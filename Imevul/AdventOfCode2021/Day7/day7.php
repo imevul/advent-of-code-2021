@@ -32,7 +32,7 @@ function part1(array $input): int {
 }
 
 /**
- * @param array $input<int> The list of input
+ * @param array<int> $input The list of input
  * @return int The result
  */
 function part2(array $input): int {

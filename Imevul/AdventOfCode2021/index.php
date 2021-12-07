@@ -31,23 +31,11 @@ for ($i = 1; $i <= $maxDay; $i++) {
 }
 
 function success(mixed $v, bool $color = TRUE) {
-	if ($color) {
-		$color = new Console_Color2();
-
-		return $color->convert("%G$v%n");
-	}
-
-	return $v;
+	return $color ? (new Console_Color2)->convert("%G$v%n") : $v;
 }
 
 function failure(mixed $v, bool $color = TRUE) {
-	if ($color) {
-		$color = new Console_Color2();
-
-		return $color->convert("%R$v%n");
-	}
-
-	return $v;
+	return $color ? (new Console_Color2)->convert("%R$v%n") : $v;
 }
 
 $data = [];
@@ -68,4 +56,3 @@ $tableText = IS_CLI ? $tableText : str_replace([' ', PHP_EOL], ['&nbsp;', '<br>'
 
 echo (new DateTime('now'))->format('c') . PHP_EOL;
 echo $tableText;
-

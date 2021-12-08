@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa0d380c934553360746e790e8084906",
+    "content-hash": "6d649a4626b3fae91ed6cfd66d84cac4",
     "packages": [
         {
             "name": "pear/console_color2",
@@ -183,7 +183,10 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-json": "*",
+        "ext-mbstring": "*"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"
 }

@@ -1,10 +1,10 @@
 <?php
 /*
  * Boilerplate
- * https://adventofcode.com/2021/day/0
+ * https://adventofcode.com/2021/day/9
  */
 
-namespace Imevul\AdventOfCode2021\Day0;
+namespace Imevul\AdventOfCode2021\Day9;
 
 require_once __DIR__ . '/../../../bootstrap.php';
 

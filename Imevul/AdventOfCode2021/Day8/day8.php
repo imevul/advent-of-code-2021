@@ -6,7 +6,7 @@
 
 namespace Imevul\AdventOfCode2021\Day8;
 
-use Imevul\AdventOfCode2021\Common\Set;
+use MathPHP\SetTheory\Set;
 
 require_once __DIR__ . '/../../../bootstrap.php';
 
@@ -29,19 +29,20 @@ function getConvertedInput(array $input): array {
  * @return int
  */
 function findDigit(Set $pattern, array $digits): int {
+	$stats = fn(Set $p, Set $d) => [$p->intersect($d)->count(), $p->difference($d)->count()];
 	$digit = [
 		2 => 1,
 		3 => 7,
 		4 => 4,
 		5 => fn() => array_key_first(array_filter([
-			2 => $pattern->compareValues($digits[4]) == [2, 3],
-			3 => $pattern->compareValues($digits[1]) == [2, 3],
-			5 => $pattern->compareValues($digits[4]) == [3, 2],
+			2 => $stats($pattern, $digits[4]) == [2, 3],
+			3 => $stats($pattern, $digits[1]) == [2, 3],
+			5 => $stats($pattern, $digits[4]) == [3, 2],
 		], fn($v) => $v)),
 		6 =>  fn() => array_key_first(array_filter([
-			6 => $pattern->compareValues($digits[1]) == [1, 5],
-			9 => $pattern->compareValues($digits[4]) == [4, 2],
-			0 => $pattern->compareValues($digits[1]) == [2, 4],
+			6 => $stats($pattern, $digits[1]) == [1, 5],
+			9 => $stats($pattern, $digits[4]) == [4, 2],
+			0 => $stats($pattern, $digits[1]) == [2, 4],
 		], fn($v) => $v)),
 		7 => 8,
 	][$pattern->count()];
@@ -65,7 +66,7 @@ function part2(array $input): int {
 	$result = 0;
 
 	foreach ($input as [$patterns, $outputs]) {
-		usort($patterns, fn(Set $p1, Set $p2) => $p1->compareTo($p2));
+		usort($patterns, fn(Set $p1, Set $p2) => compare($p1->length(), $p2->length()));
 		$digits = array_reduce($patterns, fn($c, $p) => $c + [findDigit($p, $c) => $p], []);
 
 		$result += array_reduce(

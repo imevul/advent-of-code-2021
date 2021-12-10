@@ -2,6 +2,8 @@
 
 namespace Imevul\AdventOfCode2021;
 
+ini_set('error_reporting', E_ALL ^ E_DEPRECATED);
+
 use Console_Color2;
 use Console_Table;
 use DateTime;
@@ -14,7 +16,8 @@ define('ONLY_LATEST', TRUE);
 
 $days = [];
 $directories = glob('Day*');
-$maxDay = (int)$directories[array_key_last($directories)][-1];
+natsort($directories);
+$maxDay = (int)str_replace('Day', '', $directories[array_key_last($directories)]);
 
 for ($i = 1; $i <= $maxDay; $i++) {
 	$filename = "day$i/day$i.php";

@@ -21,13 +21,7 @@ function getConvertedInput(array $input): array {
  * @return int The result
  */
 function part1(array $input): int {
-	[$result] = array_reduce(
-		$input,
-		fn($c, $i) => [$c[0] += $i > $c[1], $i],
-		[0, INF]
-	);
-
-	return $result;
+	return count(array_filter($input, fn($v, $k) => $v > $input[$k - 1], ARRAY_FILTER_USE_BOTH)) - 1;
 }
 
 /**
@@ -35,14 +29,7 @@ function part1(array $input): int {
  * @return int The result
  */
 function part2(array $input): int {
-	array_walk($input, fn(&$v, $k) => $v = array_sum(array_slice($input, $k, 3)));
-	[$result] = array_reduce(
-		$input,
-		fn($c, $i) => [$c[0] += $i > $c[1], $i],
-		[0, INF]
-	);
-
-	return $result;
+	return count(array_filter($input, fn($v, $k) => $v > $input[$k - 3], ARRAY_FILTER_USE_BOTH)) - 3;
 }
 
 return [test([7, 5]), run(empty($skipRun))];
